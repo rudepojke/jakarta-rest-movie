@@ -9,15 +9,30 @@ import org.farid.jakartarestmovie.model.Movie;
 import org.farid.jakartarestmovie.repository.MovieRepository;
 
 import java.util.List;
-
+/**
+ * expenerar endpointer för crud operationer på /movies
+ */
 @Path("/movies")
+/**
+ * svarar med json
+ */
 @Produces(MediaType.APPLICATION_JSON)
+/**
+ * tar in data med json
+ */
 @Consumes(MediaType.APPLICATION_JSON)
 public class MovieResource {
 
+    /**
+     *repo som hanterar dataoperationer för movies
+     * injiceras av CDI
+     */
     @Inject
     private MovieRepository repo;
 
+    /**
+     * Skapar en ny film
+     */
     @POST
     @Transactional
     public Response create(Movie movie) {
@@ -25,11 +40,17 @@ public class MovieResource {
         return Response.status(Response.Status.CREATED).build();
     }
 
+    /**
+     * hämtar alla filmer
+     */
     @GET
     public List<Movie> getAll() {
         return repo.findAll();
     }
 
+    /**
+     * hämtar en film med specifik id
+     */
     @GET
     @Path("/{id}")
     public Response get(@PathParam("id") Long id) {
@@ -38,6 +59,9 @@ public class MovieResource {
         return Response.ok(movie).build();
     }
 
+    /**
+     * ändrar eller uppdaterar en specifik film
+     */
     @PUT
     @Path("/{id}")
     @Transactional
@@ -55,6 +79,9 @@ public class MovieResource {
         return Response.ok(existing).build();
     }
 
+    /**
+     * tar bort en film med specifik id
+     */
     @DELETE
     @Path("/{id}")
     @Transactional
